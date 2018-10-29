@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -62,10 +63,10 @@ public class MainActivity extends AppCompatActivity {
         Context context = getApplicationContext();
         CharSequence text=null;
         if (Integer.parseInt(editText.getText().toString())>getNumber()){
-            text = "El numero es mas pequeño"+getNumber();
+            text = "El numero es mas pequeño "+getNumber();
             intentos++;
         }else if(Integer.parseInt(editText.getText().toString())<getNumber()){
-            text = "El numero es mas grande";
+            text = "El numero es mas grande "+getNumber();
             intentos++;
         }else if(Integer.parseInt(editText.getText().toString())==getNumber()){
             text = "Has acertado";
@@ -77,14 +78,17 @@ public class MainActivity extends AppCompatActivity {
             Button button = dialog.findViewById(R.id.ok);
             button.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    while (name=="") {
-                        EditText edit = dialog.findViewById(R.id.txt_name);
-                        name = edit.getText().toString();
+                    EditText edit = dialog.findViewById(R.id.txt_name);
+                    name = edit.getText().toString();
+                    if (!name.equals("")) {
+                        dialog.dismiss();
+                        arrIntent.add(new Intentos(intentos, name));
+                        name = "";
+                        intentos = 0;
+                    }else{
+                        Toast toast = Toast.makeText(getApplicationContext(), "No puedes dejar el nombre en blanco", Toast.LENGTH_LONG);
+                        toast.show();
                     }
-                    dialog.dismiss();
-                    arrIntent.add(new Intentos(intentos,name));
-                    name="";
-                    intentos=0;
                 }
             });
 

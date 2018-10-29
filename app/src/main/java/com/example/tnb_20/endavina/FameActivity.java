@@ -25,14 +25,14 @@ public class FameActivity extends AppCompatActivity {
 
         ArrayList<Intentos> arrRank=MainActivity.arrIntent;
         int aux;
-        for (int i=0; i<arrRank.size(); i++){
+        /*for (int i=0; i<arrRank.size(); i++){
             for (int y=0; i<arrRank.size(); y++){
                 aux=arrRank.get(y).intentos;
             }
-        }
+        }*/
 
         for (Intentos tries : MainActivity.arrIntent) {
-            rank.setText(rank.getText()+"Nombre: "+tries.player_name+" Intentos: "+tries.intentos+"\n");
+            rank.setText(rank.getText()+"Nombre: "+tries.player_name+"       Intentos: "+tries.intentos+"\n");
         }
     }
 }
