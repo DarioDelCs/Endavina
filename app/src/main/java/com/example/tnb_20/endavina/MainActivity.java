@@ -21,13 +21,13 @@ public class MainActivity extends AppCompatActivity {
     int intentos=0;
 
     String name="";
-    ArrayList<Intentos> objIntent = new ArrayList<>();
+    static ArrayList<Intentos> arrIntent = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setNumber((int)(Math.random()*101)+1);
+        setNumber((int)(Math.random()*99)+1);
 
         final EditText editText = findViewById(R.id.editText_num);
 
@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
                     putNumber(editText);
-
                     return true;
                 }
                 return false;
@@ -75,47 +74,22 @@ public class MainActivity extends AppCompatActivity {
             dialog.setContentView(R.layout.dialag);
             dialog.setTitle("Title");
 
-            Button button = (Button) dialog.findViewById(R.id.ok);
+            Button button = dialog.findViewById(R.id.ok);
             button.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-
-                    EditText edit=(EditText)dialog.findViewById(R.id.name);
-                    String text=edit.getText().toString();
-
+                    while (name=="") {
+                        EditText edit = dialog.findViewById(R.id.txt_name);
+                        name = edit.getText().toString();
+                    }
                     dialog.dismiss();
-                    name=text;
-
+                    arrIntent.add(new Intentos(intentos,name));
+                    name="";
+                    intentos=0;
                 }
             });
 
-
             dialog.show();
 
-
-
-            /*final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
-            builder.setTitle("Escribe tu nombre");
-
-            builder.setMessage("Some message...")
-                    .setCancelable(false)
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                           name=builder.getContext()+"";
-                        }
-                    })
-                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.cancel();
-                        }
-                    });
-
-            AlertDialog alertDialog = builder.create();
-            alertDialog.show();*/
-
-
-            objIntent.add(new Intentos(intentos,name));
-            intentos=0;
             setNumber((int)(Math.random()*101)+1);
         }
 

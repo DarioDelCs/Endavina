@@ -9,7 +9,7 @@ public class Intentos {
         this.intentos=intento;
         this.player_name=nombre;
     }
-    public Intentos(){
+    /*public Intentos(){
 
     }
 
@@ -19,5 +19,5 @@ public class Intentos {
 
     public String getPlayer_name() {
         return player_name;
-    }
+    }*/
 }
