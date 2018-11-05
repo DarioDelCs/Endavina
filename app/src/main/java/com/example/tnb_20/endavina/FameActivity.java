@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
+import java.util.Collections;
+
 public class FameActivity extends AppCompatActivity {
 
     @Override
@@ -13,6 +15,8 @@ public class FameActivity extends AppCompatActivity {
 
         super.setTitle("Ranking");
         TextView rank = findViewById(R.id.txtrank);
+
+        Collections.sort(MainActivity.arrIntent);
 
         for (Intentos tries : MainActivity.arrIntent) {
             rank.setText(rank.getText()+"Nombre: "+tries.player_name+"       Intentos: "+tries.intentos+"\n");

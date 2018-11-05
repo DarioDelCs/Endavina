@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,13 +21,13 @@ public class MainActivity extends AppCompatActivity {
     int intentos=0;
 
     String name="";
-    static ArrayList<Intentos> arrIntent = new ArrayList<>();
+    static List<Intentos> arrIntent = new ArrayList<Intentos>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setNumber((int)(Math.random()*99)+1);
+        setNumber(new Random().nextInt(100));
 
         final EditText editText = findViewById(R.id.editText_num);
 
@@ -91,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
             dialog.show();
 
-            setNumber((int)(Math.random()*101)+1);
+            setNumber(new Random().nextInt(100));
         }
 
         int duration = Toast.LENGTH_SHORT;
