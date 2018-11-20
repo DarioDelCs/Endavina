@@ -16,8 +16,6 @@ public class FameActivity extends AppCompatActivity {
         super.setTitle("Ranking");
         TextView rank = findViewById(R.id.txtrank);
 
-        Collections.sort(MainActivity.arrIntent);
-
         for (Intentos tries : MainActivity.arrIntent) {
             rank.setText(rank.getText()+"Nombre: "+tries.player_name+"       Intentos: "+tries.intentos+"\n");
         }

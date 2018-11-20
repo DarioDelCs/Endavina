@@ -11,7 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -26,6 +28,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (arrIntent.size()==0){
+            loadInfo();
+        }
         setContentView(R.layout.activity_main);
         setNumber(new Random().nextInt(100));
 
@@ -44,7 +49,9 @@ public class MainActivity extends AppCompatActivity {
         final Button button = findViewById(R.id.button_ok);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                putNumber(editText);
+                if(!editText.getText().toString().equals("")){
+                    putNumber(editText);
+                }
             }
         });
         final Button bRanking = findViewById(R.id.ranking);
@@ -84,6 +91,9 @@ public class MainActivity extends AppCompatActivity {
                         arrIntent.add(new Intentos(intentos, name));
                         name = "";
                         intentos = 0;
+                        setNumber(new Random().nextInt(99)+1);
+                        Collections.sort(arrIntent);
+                        guardarInfo();
                     }else{
                         Toast toast = Toast.makeText(getApplicationContext(), "No puedes dejar el nombre en blanco", Toast.LENGTH_LONG);
                         toast.show();
@@ -92,8 +102,6 @@ public class MainActivity extends AppCompatActivity {
             });
 
             dialog.show();
-
-            setNumber(new Random().nextInt(100));
         }
 
         int duration = Toast.LENGTH_SHORT;
@@ -107,4 +115,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setNumber(int num){ this.number=num; }
+
+    private void loadInfo(){
+        try{
+            BufferedReader br = new BufferedReader(new InputStreamReader(openFileInput("persistence.txt")));
+            String linia;
+            while((linia = br.readLine())!=null){
+                arrIntent.add(new Intentos(Integer.parseInt(linia.split(";")[0]),linia.split(";")[1]));
+            }
+            br.close();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void guardarInfo(){
+        try {
+            OutputStreamWriter osw = new OutputStreamWriter(openFileOutput("persistence.txt",Context.MODE_PRIVATE));
+            for (int i=0; i<arrIntent.size(); i++){
+                osw.write(arrIntent.get(i).intentos+";"+arrIntent.get(i).player_name);
+                osw.append("\r\n");
+            }
+            osw.close();
+
+        } catch (Exception  e) {
+            e.printStackTrace();
+        }
+    }
 }
